@@ -49,7 +49,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Handle search
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
-$posts = $search ? searchPosts($pdo, $search) : getAllPosts($pdo);
+if ($search) {
+    $stmt = $pdo->prepare("
+        SELECT p.*, u.username, u.profile_pic
+        FROM posts p
+        JOIN users u ON p.user_id = u.id
+        WHERE (p.content LIKE ? OR p.hashtags LIKE ?)
+        ORDER BY p.created_at DESC
+    ");
+    $search_param = "%$search%";
+    $stmt->execute([$search_param, $search_param]);
+    $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $stmt = $pdo->query("
+        SELECT p.*, u.username, u.profile_pic
+        FROM posts p
+        JOIN users u ON p.user_id = u.id
+        ORDER BY p.created_at DESC
+    ");
+    $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
 // Count posts for searched hashtag
 $hashtag_count = 0;
@@ -63,15 +82,15 @@ if (strpos($search, '#') === 0) {
 <head>
     <?php include __DIR__ . '/../includes/header.php'; ?>
     <title>Glimmr - Feed</title>
-    <link rel="stylesheet" href="../assets/css/feed.css">
 </head>
-<body>
-    <!-- Custom Header for Feed Page -->
+<body style="display: flex; justify-content: center;">
+    <!--custom header for feed page-->
     <header class="header">
         <div class="container d-flex justify-content-between align-items-center">
             <div class="logo-container d-flex align-items-center">
                 <img src="../assets/img/logo.png" alt="Glimmr Logo" class="logo">
             </div>
+
             <div class="search-container">
                 <form method="GET" class="d-flex">
                     <input type="text" 
@@ -84,23 +103,33 @@ if (strpos($search, '#') === 0) {
                     </button>
                 </form>
             </div>
+
             <nav class="navbar">
                 <ul class="nav-list d-flex">
-                    <li class="nav-item"><a href="../pages/feed.php">
-                        <img border="0" alt="Feed" src="../assets/img/feed.png" width="70" height="28" 
-                        class="nav-link"></a></li>
-                    <li class="nav-item"><a href="../includes/auth.php?logout=true">
-                        <img border="0" alt="Logout" src="../assets/img/logout.png" width="70" height="28" 
-                        class="nav-link"></a></li>
+                    <li class="nav-item">
+                        <a href="../pages/feed.php" class="btn btn-link" style="text-decoration: none;">
+                        <i class="fas fa-newspaper"></i> Feed</a></li>
+
+                    <li class="nav-item">
+                        <a href="../pages/profile.php" class="btn btn-link" style="text-decoration: none;">
+                        <i class="fas fa-user-circle me-1"></i> <?= htmlspecialchars($_SESSION['username']) ?></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="../includes/auth.php?logout=true" class="btn btn-link" style="text-decoration: none;">
+                        <i class="fas fa-right-from-bracket me-1"></i> Logout</a>
+                    </li>    
                 </ul>
             </nav>
+
         </div>
     </header>
 
     <div class="container" style="margin-top: 105px;">
         <div class="row justify-content-center w-100">
             <div class="col-lg-8">
-                <!-- Search Results Info -->
+
+                <!--search results info -->
                 <?php if ($search): ?>
                     <div class="alert alert-info mb-4">
                         <?php if (strpos($search, '#') === 0): ?>
@@ -112,7 +141,7 @@ if (strpos($search, '#') === 0) {
                     </div>
                 <?php endif; ?>
 
-                <!-- Post Creation Card -->
+                <!--post creation card-->
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <form id="postForm" method="POST" enctype="multipart/form-data">
@@ -124,12 +153,12 @@ if (strpos($search, '#') === 0) {
                                           required></textarea>
                             </div>
                             
-                            <!-- Media Preview -->
+                            <!--media preview -->
                             <div id="mediaPreview" class="mb-3 text-center position-relative"></div>
                             
                             <div class="d-flex justify-content-between align-items-center pt-2 border-top">
                                 <div class="d-flex">
-                                    <!-- Media Upload -->
+                                    <!--media upload -->
                                     <label class="btn btn-sm btn-outline-secondary me-2">
                                         <i class="fas fa-image me-1"></i> Photo
                                         <input type="file" 
@@ -146,7 +175,7 @@ if (strpos($search, '#') === 0) {
                     </div>
                 </div>
 
-                <!-- News Feed -->
+                <!--news feed -->
                 <?php if (empty($posts)): ?>
                     <div class="card">
                         <div class="card-body text-center py-5">
@@ -158,17 +187,26 @@ if (strpos($search, '#') === 0) {
                 <?php else: ?>
                     <?php foreach ($posts as $post): ?>
 <div class="card mb-4 post-card position-relative">
-    <form method="POST" class="delete-post-form position-absolute top-0 end-0 m-2" onsubmit="return confirm('Are you sure you want to delete this post?');">
-        <input type="hidden" name="delete_post_id" value="<?= $post['id'] ?>">
-        <button type="submit" class="btn btn-danger btn-sm delete-post-button" title="Delete Post">&times;</button>
-    </form>
+<div class="post-options position-absolute top-0 end-0 m-2">
+    
+    <button class="btn btn-sm btn-light three-dots-btn" title="Post options">&#x22EE;</button>
+    <div class="dropdown-menu d-none shadow-sm">
+
+        <form method="POST" class="delete-post-form" onsubmit="return confirm('Are you sure you want to delete this post?');">
+            <input type="hidden" name="delete_post_id" value="<?= $post['id'] ?>">
+            <button type="submit" class="dropdown-item text-danger">Delete</button>
+        </form>
+
+        <button class="dropdown-item report-post-btn" data-post-id="<?= $post['id'] ?>">Report</button>
+    </div>
+</div>
     <div class="card-body">
                                 <div class="d-flex mb-3">
-                                    <img src="/../assets/img/profile-pic.png" 
-                                         class="rounded-circle me-3" 
-                                         width="50" 
-                                         height="50" 
-                                         alt="Profile picture">
+                                    <img src="<?= htmlspecialchars($post['profile_pic'] ?? '/assets/img/profile-pic.png') ?>" 
+                                        class="rounded-circle me-3" 
+                                        width="50" 
+                                        height="50" 
+                                        alt="Profile picture">
                                     <div>
                                         <h6 class="mb-0"><?= htmlspecialchars($post['username']) ?></h6>
                                         <small class="text-muted">
@@ -198,7 +236,7 @@ if (strpos($search, '#') === 0) {
                                         foreach ($tags as $tag):
                                             if (!empty(trim($tag))):
                                         ?>
-                                            <a href="/pages/feed.php?search=%23<?= urlencode(trim($tag)) ?>" 
+                                            <a href="../pages/feed.php?search=%23<?= urlencode(trim($tag)) ?>" 
                                                class="hashtag me-2">
                                                 #<?= htmlspecialchars(trim($tag)) ?>
                                             </a>
@@ -258,5 +296,36 @@ if (strpos($search, '#') === 0) {
         document.getElementById('media').value = '';
     }
     </script>
+    
 </body>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Feed page JS loaded');
+    document.querySelectorAll('.three-dots-btn').forEach(function(button) {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation();
+            console.log('Three dots clicked');
+            const dropdown = this.nextElementSibling;
+            if (dropdown.classList.contains('d-none')) {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.add('d-none'));
+                dropdown.classList.remove('d-none');
+            } else {
+                dropdown.classList.add('d-none');
+            }
+        });
+    });
+
+    document.addEventListener('click', function() {
+        document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.add('d-none'));
+    });
+
+    document.querySelectorAll('.report-post-btn').forEach(function(button) {
+        button.addEventListener('click', function() {
+            const postId = this.getAttribute('data-post-id');
+            alert('Report functionality is not implemented yet for post ID: ' + postId);
+            this.parentElement.classList.add('d-none');
+        });
+    });
+});
+</script>
 </html>

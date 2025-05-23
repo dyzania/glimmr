@@ -95,7 +95,7 @@ include '../includes/header.php';
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password" name="password" required>
-                <div class="form-text">Password must be at least 8 characters long</div>
+                <div class="form-text"> Password must be at least 8 characters long</div>
             </div>
             
             <div class="mb-3">

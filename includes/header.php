@@ -17,21 +17,22 @@
         <div class="container d-flex justify-content-between align-items-center w-100 p-0 m-0">
 
             <div class="logo-container d-flex align-items-center">
-                <img src="../assets/img/logo.png" alt="Glimmr Logo" class="logo">
+                <a href="../pages/home.php"><img src="../assets/img/logo.png" alt="Glimmr Logo" class="logo"></a>
             </div>
-            
+
             <nav class="navbar">
                 <ul class="nav-list d-flex">
 
-                    <li class="nav-item"><a href="../pages/home.php">
-                    <img border="0" alt="W3Schools" src="../assets/img/home.png" width="70" height="28" 
-                    class="nav-link"></a></li>
+                    <li class="nav-item"><a href="../pages/home.php" class="btn btn-link" style="text-decoration: none;">
+                    <i class="fas fa-house"></i> Home
+                    </a></li>
+
 
                     <?php if(isset($_SESSION['user_id'])): ?>
 
-                        <li class="nav-item"><a href="../pages/feed.php">
-                        <img border="0" alt="Feed" src="../assets/img/feed.png" width="70" height="28" 
-                        class="nav-link"></a></li>
+                        <li class="nav-item"><a href="../pages/feed.php" class="btn btn-link" style="text-decoration: none;">
+                        <i class="fas fa-newspaper"></i> Feed
+                        </a></li>
 
                         <li class="nav-item"><a href="../includes/auth.php?logout=true">
                         <img border="0" alt="Logout" src="../assets/img/logout.png" width="70" height="28" 
@@ -39,13 +40,14 @@
 
                     <?php else: ?>
 
-                        <li class="nav-item"><a href="../pages/login.php">
-                            <img border="0" alt="Login" src="../assets/img/login.png" width="70" height="28" 
-                            class="nav-link"></a></li>
+                        <li class="nav-item">
+                        <a href="../pages/login.php" class="btn btn-link" style="text-decoration: none;"> 
+                            <i class="fas fa-sign-in-alt me-1"></i> Login</a>
+                        </li>
                         
-                        <li class="nav-item"><a href="../pages/signup.php">
-                            <img border="0" alt="Register" src="../assets/img/register.png" width="70" height="28" 
-                            class="nav-link"></a></li>
+                        <li class="nav-item"> <a href="../pages/signup.php" class="btn btn-link" style="text-decoration: none; color: black;">
+                        <i class="fas fa-user-plus me-1"></i> Register
+                        </a></li>
 
                     <?php endif; ?>
 

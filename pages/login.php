@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 ?>
 
-<div class="container" style="margin-top: 135px;">
+<div class="container">
     <div class="auth-form">
         <h2 class="form-title">Login to Your Account</h2>
         

@@ -15,8 +15,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    align-items: center;
-
+    align-items: center
 }
 
 .header {
@@ -75,12 +74,18 @@ body {
 .nav-item {
     margin-left: 20px;
 }
+.nav-item:hover {
+    color: black;
+}
 
 .nav-link {
     text-decoration: none;
     color: var(--text-color);
     font-weight: 500;
     transition: color 0.3s;
+}
+.btn btn-link:hover {
+    color: black;
 }
 
 .nav-link:hover {
@@ -250,7 +255,6 @@ body {
     background-color: #f0f2f5;
     border-radius: 20px;
     padding: 12px;
-    border: none;
     resize: none;
 }
 
@@ -313,4 +317,89 @@ body {
 
 .delete-post-button:hover {
     background-color: #a71d2a;
+}
+
+/* Profile Picture Styles */
+.profile-picture-lg {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 3px solid #7A6C00;
+}
+
+.profile-picture-sm {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+/* Profile Page Styles */
+.user-info {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+/* Three Dots Button and Dropdown Menu Styles */
+.three-dots-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--text-color);
+    padding: 0 5px;
+}
+
+.three-dots-btn:hover {
+    color: var(--primary-color);
+}
+
+.post-options {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    z-index: 20;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-width: 120px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    padding: 0.25rem 0;
+}
+
+.dropdown-menu.d-none {
+    display: none;
+}
+
+.dropdown-item {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.dropdown-item:hover {
+    background-color: var(--primary-light);
+    color: var(--white);
+}
+
+.dropdown-item.text-danger {
+    color: #dc3545;
+}
+
+.dropdown-item.text-danger:hover {
+    background-color: #a71d2a;
+    color: white;
 }
