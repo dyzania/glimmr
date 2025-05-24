@@ -6,6 +6,7 @@ $page_title = "Login";
 include '../includes/header.php'; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
     include '../config/database.php';
     include '../functions/user_functions.php';
     

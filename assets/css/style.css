@@ -15,7 +15,9 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    align-items: center
+    align-items: center;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .header {
@@ -82,14 +84,35 @@ body {
     text-decoration: none;
     color: var(--text-color);
     font-weight: 500;
-    transition: color 0.3s;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    padding: 0.5rem 1rem;
 }
 .btn btn-link:hover {
     color: black;
 }
 
 .nav-link:hover {
-    color: var(--primary-color);
+    color: var(--primary-color) !important;
+    transform: translateY(-2px);
+}
+
+/* Active link indicator */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: all 0.3s ease-in-out;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 80%;
 }
 
 .hero-section {

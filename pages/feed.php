@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             $file_ext = pathinfo($_FILES['media']['name'], PATHINFO_EXTENSION);
             $file_name = 'post_' . time() . '_' . bin2hex(random_bytes(8)) . '.' . $file_ext;
-            $media_path = '/glimmr/assets/uploads/posts/' . $file_name;
+            $media_path = '../assets/uploads/posts/' . $file_name;
 
             move_uploaded_file($_FILES['media']['tmp_name'], __DIR__ . '/..' . $media_path);
         }
@@ -107,16 +107,16 @@ if (strpos($search, '#') === 0) {
             <nav class="navbar">
                 <ul class="nav-list d-flex">
                     <li class="nav-item">
-                        <a href="../pages/feed.php" class="btn btn-link" style="text-decoration: none;">
+                        <a href="../pages/feed.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'feed.php' ? 'active' : '' ?>" style="text-decoration: none;">
                         <i class="fas fa-newspaper"></i> Feed</a></li>
 
                     <li class="nav-item">
-                        <a href="../pages/profile.php" class="btn btn-link" style="text-decoration: none;">
+                        <a href="../pages/profile.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'profile.php' ? 'active' : '' ?>" style="text-decoration: none;">
                         <i class="fas fa-user-circle me-1"></i> <?= htmlspecialchars($_SESSION['username']) ?></a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="../includes/auth.php?logout=true" class="btn btn-link" style="text-decoration: none;">
+                        <a href="../includes/auth.php?logout=true" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'login.php' ? 'active' : '' ?>" style="text-decoration: none;">
                         <i class="fas fa-right-from-bracket me-1"></i> Logout</a>
                     </li>    
                 </ul>

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="/glimmr/assets/css/style.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+    <script src="/assets/js/nav-transitions.js" defer></script>
     <link rel="icon" href="/assets/img/logo.png">
 
 </head>
@@ -22,30 +22,29 @@
 
             <nav class="navbar">
                 <ul class="nav-list d-flex">
-
-                    <li class="nav-item"><a href="../pages/home.php" class="btn btn-link" style="text-decoration: none;">
+                    <li class="nav-item"><a href="../pages/home.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'feed.php' ? 'active' : '' ?>" style="text-decoration: none; ">
                     <i class="fas fa-house"></i> Home
                     </a></li>
 
 
                     <?php if(isset($_SESSION['user_id'])): ?>
 
-                        <li class="nav-item"><a href="../pages/feed.php" class="btn btn-link" style="text-decoration: none;">
+                        <li class="nav-item"><a href="../pages/feed.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'feed.php' ? 'active' : '' ?>" style="text-decoration: none;">
                         <i class="fas fa-newspaper"></i> Feed
                         </a></li>
 
-                        <li class="nav-item"><a href="../includes/auth.php?logout=true">
-                        <img border="0" alt="Logout" src="../assets/img/logout.png" width="70" height="28" 
-                        class="nav-link"></a></li>
+                        <li class="nav-item"><a href="../includes/auth.php?logout=true" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'feed.php' ? 'active' : '' ?>" style="text-decoration: none;">
+                        <i class="fas fa-right-from-bracket me-1"></i> Logout
+                        </a></li>
 
                     <?php else: ?>
 
                         <li class="nav-item">
-                        <a href="../pages/login.php" class="btn btn-link" style="text-decoration: none;"> 
+                        <a href="../pages/login.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'login.php' ? 'active' : '' ?>" style="text-decoration: none;"> 
                             <i class="fas fa-sign-in-alt me-1"></i> Login</a>
                         </li>
                         
-                        <li class="nav-item"> <a href="../pages/signup.php" class="btn btn-link" style="text-decoration: none; color: black;">
+                        <li class="nav-item"> <a href="../pages/signup.php" class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'signup.php' ? 'active' : '' ?>" style="text-decoration: none; color: black;">
                         <i class="fas fa-user-plus me-1"></i> Register
                         </a></li>
 
