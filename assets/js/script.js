@@ -48,6 +48,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    function showLogoutConfirmation() {
+    var logoutModal = new bootstrap.Modal(document.getElementById('logoutModal'));
+    logoutModal.show();
+    return false;
+}
     
     // Email availability check
     const emailInput = document.getElementById('email');

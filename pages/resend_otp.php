@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<div class="container">
+<div class="container d-flex justify-content-center align-items-center vh-100">
     <div class="auth-form">
         <h2 class="form-title">Resend Verification Code</h2>
         

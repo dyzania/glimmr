@@ -33,14 +33,25 @@ body {
     z-index: 1000;
 } 
 .header .logo {
-    height: 40px;
-    margin-left: 40px;
+    height: 60px;
+    margin-left: 60px;
 }
 .header .nav-list {
     display: flex;
     align-items: center;
     margin-right: 0;
 }
+.logo {
+    height: 40px;
+    margin-left: 12px;
+}
+.app-name {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin: 0;
+}
+
+
 .footer {
     background-color: var(--primary-color);
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -48,38 +59,21 @@ body {
     padding: 10px 0;
     margin-top: 5px;   
     width: 100%;    
+    height: 70px;
 }
 
-.logo {
-    height: 40px;
-    margin-left: 12px;
-}
-
-.app-name {
-    color: var(--primary-color);
-    font-weight: 700;
-    margin: 0;
-}
-.container {
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
 .nav-list {
     list-style: none;
     margin: 0;
     padding: 0;
 }
-
 .nav-item {
     margin-left: 20px;
 }
 .nav-item:hover {
     color: black;
 }
-
 .nav-link {
     text-decoration: none;
     color: var(--text-color);
@@ -88,16 +82,14 @@ body {
     position: relative;
     padding: 0.5rem 1rem;
 }
-.btn btn-link:hover {
-    color: black;
+.nav-link.active {
+    color: var(--primary-color) !important;
+    font-weight: bold;
 }
-
 .nav-link:hover {
     color: var(--primary-color) !important;
     transform: translateY(-2px);
 }
-
-/* Active link indicator */
 .nav-link::after {
     content: '';
     position: absolute;
@@ -109,11 +101,11 @@ body {
     transition: all 0.3s ease-in-out;
     transform: translateX(-50%);
 }
-
 .nav-link:hover::after,
 .nav-link.active::after {
     width: 80%;
 }
+
 
 .hero-section {
     height: 75vh;
@@ -146,6 +138,7 @@ body {
     color: var(--primary-color);
 }
 
+
 .feature-card {
     border: none;
     border-radius: 10px;
@@ -154,11 +147,9 @@ body {
     transition: transform 0.3s;
     margin-bottom: 30px;
 }
-
 .feature-card:hover {
     transform: translateY(-10px);
 }
-
 .feature-card img {
     height: 200px;
     object-fit: cover;
@@ -174,48 +165,45 @@ body {
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     background-color: var(--white);
 }
-
 .form-title {
     color: var(--primary-color);
     text-align: center;
     margin-bottom: 30px;
 }
 
+
 .btn-primary {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
 }
-
 .btn-primary:hover {
     background-color: var(--primary-dark);
     border-color: var(--primary-dark);
 }
 
+
 /* Feed Page Styles */
 .search-box {
     margin: 200px 0;
 }
-
 .post-profile-pic {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     object-fit: cover;
 }
-
 .post-media {
     max-width: 100%;
     border-radius: 10px;
     margin-bottom: 15px;
 }
 
-/* Post Creation Styles */
 
+/* Post Creation Styles */
 .media-preview-container {
     position: relative;
     margin-top: 15px;
 }
-
 .media-preview-container .btn-close {
     background-color: rgba(0,0,0,0.5);
     padding: 10px;
@@ -226,7 +214,6 @@ body {
 .post-button {
     transition: all 0.3s;
 }
-
 .post-button:hover {
     transform: translateY(-2px);
 }
@@ -242,6 +229,7 @@ body {
     padding: 10px;
     display: none;
 }
+
 
 /* Responsive Styles */
 @media (max-width: 768px) {
@@ -268,11 +256,11 @@ body {
     max-width: 500px;
     margin: 0 20px;
 }
-
 .search-input {
-    border-radius: 20px;
+    border-radius: 5px;
     padding: 8px 15px;
 }
+
 
 .post-textarea {
     background-color: #f0f2f5;
@@ -280,51 +268,46 @@ body {
     padding: 12px;
     resize: none;
 }
-
 .post-textarea:focus {
     background-color: white;
     box-shadow: none;
 }
-
 .post-card {
     border-radius: 10px;
     border: none;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
-
 .post-content {
     white-space: pre-line;
     line-height: 1.5;
 }
 
+
 .hashtag {
     color: #7A6C00;
     text-decoration: none;
 }
-
 .hashtag:hover {
     text-decoration: underline;
 }
-
 #mediaPreview img,
 #mediaPreview video {
     max-height: 500px;
     object-fit: contain;
 }
 
+
 .btn-close {
     background-color: rgba(0,0,0,0.5);
     opacity: 1;
     padding: 0.5rem;
 }
-
 .delete-post-form {
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
     z-index: 10;
 }
-
 .delete-post-button {
     background-color: #dc3545;
     border: none;
@@ -337,10 +320,10 @@ body {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-
 .delete-post-button:hover {
     background-color: #a71d2a;
 }
+
 
 /* Profile Picture Styles */
 .profile-picture-lg {
@@ -348,14 +331,13 @@ body {
     height: 150px;
     object-fit: cover;
     border: 3px solid #7A6C00;
+    border-radius: 50%;
 }
-
 .profile-picture-sm {
     width: 50px;
     height: 50px;
     object-fit: cover;
 }
-
 /* Profile Page Styles */
 .user-info {
     background-color: #f8f9fa;
@@ -363,6 +345,12 @@ body {
     border-radius: 8px;
     margin-top: 20px;
 }
+
+/* Post Container Styles */
+.post-container {
+    margin-top: 100px;
+}
+
 
 /* Three Dots Button and Dropdown Menu Styles */
 .three-dots-btn {
@@ -374,17 +362,16 @@ body {
     color: var(--text-color);
     padding: 0 5px;
 }
-
 .three-dots-btn:hover {
     color: var(--primary-color);
 }
-
 .post-options {
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
     z-index: 20;
 }
+
 
 .dropdown-menu {
     position: absolute;
@@ -397,11 +384,9 @@ body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     padding: 0.25rem 0;
 }
-
 .dropdown-menu.d-none {
     display: none;
 }
-
 .dropdown-item {
     padding: 0.5rem 1rem;
     cursor: pointer;
@@ -412,16 +397,13 @@ body {
     font-size: 0.9rem;
     color: var(--text-color);
 }
-
 .dropdown-item:hover {
     background-color: var(--primary-light);
     color: var(--white);
 }
-
 .dropdown-item.text-danger {
     color: #dc3545;
 }
-
 .dropdown-item.text-danger:hover {
     background-color: #a71d2a;
     color: white;

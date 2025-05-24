@@ -32,9 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 ?>
 
-<div class="container">
+<div class="login-container d-flex justify-content-center align-items-center vh-100">
     <div class="auth-form">
-        <h2 class="form-title">Login to Your Account</h2>
         
         <?php if (isset($error)): ?>
             <div class="alert alert-danger"><?php echo $error; ?></div>
@@ -43,7 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if (isset($_SESSION['success'])): ?>
             <div class="alert alert-success"><?php echo $_SESSION['success']; 
             unset($_SESSION['success']); ?></div><?php endif; ?>
-        
+
+        <h2 class="form-title">Login to Your Account</h2>
         
         <form method="POST">
             <div class="mb-2">

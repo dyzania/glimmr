@@ -3,7 +3,7 @@ session_start();
 require __DIR__ . '/../config/database.php';
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: /pages/login.php");
+    header("Location: ../pages/login.php");
     exit();
 }
 

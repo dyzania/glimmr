@@ -16,11 +16,11 @@ $page_title = "My Profile";
 include __DIR__ . '/../includes/header.php';
 ?>
 
-<div class="container mt-4">
+<div class="d-flex justify-content-center align-items-center vh-100 w-50">
     <div class="row justify-content-center w-100">
-        <div class="col-lg-8">
+        <div class="col-lg-10">
             <div class="card shadow">
-                <div class="card-header bg-primary text-white">
+                <div class="card-header" style="background-color: #7A6C00; color: white;">
                     <h4 class="mb-0">My Profile</h4>
                 </div>
                 <div class="card-body">
@@ -39,7 +39,7 @@ include __DIR__ . '/../includes/header.php';
                     <?php endif; ?>
                     
                     <div class="text-center mb-4">
-                        <img src="<?= htmlspecialchars($user['profile_pic']) ?>" 
+                        <img src="<?= htmlspecialchars($user['profile_pic'] ?: '../assets/img/profile-pic.png') ?>" 
                              class="rounded-circle profile-picture-lg"
                              alt="Profile picture"
                              id="profilePicPreview">
@@ -62,8 +62,8 @@ include __DIR__ . '/../includes/header.php';
                         </form>
                     </div>
                     
-                    <div class="user-info">
-                        <h5 class="mb-3">User Information</h5>
+                    <div class="user-info d-flex flex-column align-items-start justify-content-center">
+                        <h5 class="mb-3 w-100" style="text-align: center;">User Information</h5>
                         <div class="mb-2">
                             <strong>Name:</strong> 
                             <?= htmlspecialchars($user['first_name'] . ' ' . htmlspecialchars($user['last_name'])) ?>

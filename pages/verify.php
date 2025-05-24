@@ -41,7 +41,7 @@ if ($submitted_otp == $_SESSION['otp']) {
 
 //display success message if exists
 ?>
-<div class="container">
+<div class="container d-flex justify-content-center align-items-center vh-100">
     <div class="auth-form">
         <h2 class="form-title">Verify Your Email</h2>
         

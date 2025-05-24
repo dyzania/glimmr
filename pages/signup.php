@@ -52,7 +52,7 @@ $page_title = "Sign Up";
 include '../includes/header.php'; 
 ?>
 
-<div class="container">
+<div class="signup-container d-flex justify-content-center align-items-center vh-100">
     <div class="auth-form">
         <h2 class="form-title">Create Your Account</h2>
         
@@ -80,25 +80,25 @@ include '../includes/header.php';
                 </div>
             </div>
             
-            <div class="mb-3">
+            <div class="mb-2">
                 <label for="username" class="form-label">Username</label>
                 <input type="text" class="form-control" id="username" name="username" required>
                 <div class="invalid-feedback" id="username-feedback"></div>
             </div>
             
-            <div class="mb-3">
+            <div class="mb-2">
                 <label for="email" class="form-label">Email Address</label>
                 <input type="email" class="form-control" id="email" name="email" required>
                 <div class="invalid-feedback" id="email-feedback"></div>
             </div>
             
-            <div class="mb-3">
+            <div class="mb-2">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password" name="password" required>
                 <div class="form-text"> Password must be at least 8 characters long</div>
             </div>
             
-            <div class="mb-3">
+            <div class="mb-2">
                 <label for="confirm_password" class="form-label">Confirm Password</label>
                 <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
                 <div class="invalid-feedback" id="password-feedback"></div>
