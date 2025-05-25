@@ -29,7 +29,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $error = "Invalid username or password";
     }
+
+    if ($user && password_verify($password, $user['password'])) {
+    if ($user['is_admin']) {    
+        header("Location: ../admin/dashboard.php");
+        exit();
+    } else {
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['username'] = $user['username'];
+        header("Location: feed.php");
+        exit();
+    }
 }
+}
+// After verifying credentials
+
 
 ?>
 

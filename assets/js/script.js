@@ -1,8 +1,3 @@
-// Example implementation
-document.querySelector('.feeling-picker-btn').addEventListener('click', function() {
-    // Show a modal with feeling options
-    // Would need additional HTML/CSS/JS
-});
 
 document.addEventListener('DOMContentLoaded', function() {
     // Password match validation
@@ -49,11 +44,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function showLogoutConfirmation() {
-    var logoutModal = new bootstrap.Modal(document.getElementById('logoutModal'));
-    logoutModal.show();
-    return false;
-}
     
     // Email availability check
     const emailInput = document.getElementById('email');
@@ -76,38 +66,29 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
             }
         });
-    }
+    }   
+});
+
+function validatePassword() {
+    const passwordInput = document.getElementById('password');
+    const errorElement = document.getElementById('password-error');
     
-    // Media preview
-    const mediaInput = document.getElementById('media');
-    if (mediaInput) {
-        mediaInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const previewContainer = document.createElement('div');
-                previewContainer.className = 'media-preview mb-3';
-                
-                if (file.type.startsWith('image/')) {
-                    const img = document.createElement('img');
-                    img.src = URL.createObjectURL(file);
-                    img.className = 'img-fluid';
-                    img.style.maxHeight = '300px';
-                    previewContainer.appendChild(img);
-                } else if (file.type.startsWith('video/')) {
-                    const video = document.createElement('video');
-                    video.src = URL.createObjectURL(file);
-                    video.controls = true;
-                    video.className = 'w-100';
-                    previewContainer.appendChild(video);
-                }
-                
-                const existingPreview = document.querySelector('.media-preview');
-                if (existingPreview) {
-                    existingPreview.replaceWith(previewContainer);
-                } else {
-                    mediaInput.parentNode.insertBefore(previewContainer, mediaInput.nextSibling);
-                }
-            }
-        });
+    if (passwordInput.value.length > 0 && passwordInput.value.length < 8) {
+        errorElement.style.display = 'block';
+        passwordInput.classList.add('is-invalid');
+    } else {
+        errorElement.style.display = 'none';
+        passwordInput.classList.remove('is-invalid');
+    }
+}
+
+// Also validate on form submission
+document.querySelector('form').addEventListener('submit', function(e) {
+    const passwordInput = document.getElementById('password');
+    if (passwordInput.value.length < 8) {
+        e.preventDefault();
+        document.getElementById('password-error').style.display = 'block';
+        passwordInput.classList.add('is-invalid');
+        passwordInput.focus();
     }
 });

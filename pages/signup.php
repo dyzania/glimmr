@@ -50,9 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $page_title = "Sign Up";
 include '../includes/header.php'; 
+
 ?>
 
 <div class="signup-container">
+    <script src="assets/js/script.js"></script>
     <div class="auth-form">
 
         <?php if (!empty($errors)): ?>
@@ -71,7 +73,7 @@ include '../includes/header.php';
             <img src="../assets/img/logo.png" alt="Glimmr Logo" class="logo">
         </div>
 
-        <h2 class="form-title">Create Your Account</h2>
+        <h2 class="form-title">Create Account</h2>
         
         <form id="signupForm" method="POST">
             <div class="row mb-4">
@@ -97,10 +99,11 @@ include '../includes/header.php';
                 <div class="invalid-feedback" id="email-feedback"></div>
             </div>
             
-            <div class="mb-4">
-                
-                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-                <div class="form-text"> * Password must be at least 8 characters long</div>
+           <div class="mb-4">
+                 <input type="password" class="form-control" id="password" name="password" placeholder="Password" required
+                 minlength="8" oninput="validatePassword()">
+            <div class="form-text">* Password must be at least 8 characters long</div>
+            <div id="password-error" class="text-danger" style="display: none;">Required (minimum 8 characters)</div>
             </div>
             
             <div class="mb-4">

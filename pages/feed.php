@@ -10,7 +10,19 @@ if (!isset($_SESSION['user_id'])) {
 require __DIR__ . '/../config/database.php';
 require __DIR__ . '/../functions/post_functions.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
+// Handle post deletion
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_post_id'])) {
+    $post_id = intval($_POST['delete_post_id']);
+    if (deletePost($pdo, $post_id, $_SESSION['user_id'])) {
+        $_SESSION['success'] = 'Post deleted successfully.';
+    } else {
+        $_SESSION['error'] = 'Failed to delete post.';
+    }
+    header("Location: ../pages/feed.php");
+    exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['delete_post_id'])) { 
 
         //handle post creation
         $content = htmlspecialchars($_POST['content'], ENT_QUOTES, 'UTF-8');
@@ -19,10 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $media_path = null;
         if (!empty($_FILES['media']['name'])) {
             $upload_dir = __DIR__ . 'assets/uploads/posts/';
-            if (!file_exists($upload_dir)) {
-                mkdir($upload_dir, 0777, true);
-            }
-            
+
             //validate file type
             $file_ext = pathinfo($_FILES['media']['name'], PATHINFO_EXTENSION);
             $file_name = 'post_' . time() . '_' . bin2hex(random_bytes(8)) . '.' . $file_ext;
@@ -76,12 +85,15 @@ if (strpos($search, '#') === 0) {
 <!DOCTYPE html>
 <html lang="en">   
 <head>
-    <?php include __DIR__ . '/../includes/header.php'; ?>
     <title>Glimmr - Feed</title>
     <script src="assets/js/script.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="/glimmr/assets/css/style.css" rel="stylesheet">
 </head>
 
 <body class="d-flex flex-column min-vh-100">
+
     <!--custom header for feed page-->
     <header class="header">
         <div class="d-flex justify-content-between align-items-center w-100 p-0 m-0">
@@ -97,7 +109,7 @@ if (strpos($search, '#') === 0) {
                            name="search" 
                            placeholder="Search posts or #hashtags"
                            value="<?= htmlspecialchars($search) ?>">
-                    <button type="submit" class="btn btn-link ms-2">
+                    <button type="submit" class="btn btn-secondary ms-1">
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
@@ -116,7 +128,7 @@ if (strpos($search, '#') === 0) {
                     </li>
 
                     <li class="nav-item">
-                        <a href="../pages/login.php" class="nav-link" style="text-decoration: none;">
+                        <a href="../includes/auth.php?logout=true" class="nav-link" style="text-decoration: none;">
                         <i class="fas fa-right-from-bracket me-1"></i> Logout</a>
                     </li>    
                 </ul>
@@ -127,7 +139,7 @@ if (strpos($search, '#') === 0) {
 
     <div class="h-100 w-100 d-flex flex-column align-items-center">
         <div class="row justify-content-center w-100">
-            
+
             <?php if (isset($_SESSION['error'])): ?>
                         <div class="alert alert-danger">
                             <?= htmlspecialchars($_SESSION['error']) ?>
@@ -145,7 +157,7 @@ if (strpos($search, '#') === 0) {
                 <div class="col-lg-6 post-container">
                 <!--search results info -->
                 <?php if ($search): ?>
-                    <div class="alert alert-info mb-4">
+                    <div class="alert alert-info mb-2">
                         <?php if (strpos($search, '#') === 0): ?>
                             Showing <?= $hashtag_count ?> posts with hashtag <strong><?= htmlspecialchars($search) ?></strong>
                         <?php else: ?>
@@ -156,11 +168,11 @@ if (strpos($search, '#') === 0) {
                 <?php endif; ?>
 
                 <!--post creation card-->
-                <div class="card mb-4 shadow-sm">
+                <div class="card mb-2 shadow-sm" id="postCreationCard">
                     <div class="card-body">
                         <form id="postForm" method="POST" enctype="multipart/form-data">
                             <div class="mb-3">
-                                <textarea class="form-control post-textarea" 
+                                <textarea class="form-control post-textarea" id="textarea_content" 
                                           name="content" 
                                           rows="3" 
                                           placeholder="What's on your mind?"
@@ -173,8 +185,8 @@ if (strpos($search, '#') === 0) {
                                 <div class="d-flex">
 
                                     <!--media upload -->
-                                    <label class="btn btn-sm btn-outline-secondary me-2">
-                                        <i class="fas fa-image me-1"></i> Photo
+                                    <label class="btn btn-sm btn-outline-secondary me-2" style="color: white;">
+                                        <i class="fas fa-image me-1"></i> Photo / Video
                                         <input type="file" 
                                                id="media" 
                                                name="media" 
@@ -183,7 +195,7 @@ if (strpos($search, '#') === 0) {
                                                onchange="previewMedia(this)">
                                     </label>
                                 </div>
-                                <button type="submit" class="btn btn-primary px-4">Post</button>
+                                <button type="submit" class="btn btn-primary px-4" style="background-color: #a89900; color: black;">Post</button>
                             </div>
                         </form>
                     </div>
@@ -192,11 +204,11 @@ if (strpos($search, '#') === 0) {
 
                 <!-- NEWS FEED -->
                 <?php if (empty($posts)): ?>
-                    <div class="card">
-                        <div class="card-body text-center py-5">
-                            <i class="fas fa-newspaper fa-3x text-muted mb-3"></i>
+                    <div class="card" id="noPostsCard">
+                        <div class="card-body text-center py-5" style="color: #a89900;">
+                            <i class="fas fa-newspaper fa-3x mb-2"></i>
                             <h5>No posts found</h5>
-                            <p class="text-muted">Be the first to post something!</p>
+                            <p>Be the first to post something!</p>
                         </div>
                     </div>
                 <?php else: ?>
@@ -204,45 +216,51 @@ if (strpos($search, '#') === 0) {
                 <!-- POSTS -->
                 <?php 
                 foreach ($posts as $post): ?>
-                <div class="card mb-4 post-card position-relative">
-                        <!-- profile pic, username, time posted -->
-                        <div class="card-body">
-                            <div class="d-flex mb-3">
-                                <img src="<?= htmlspecialchars($post['profile_pic'] ?? '/assets/img/profile-pic.png') ?>" 
-                                    class="rounded-circle me-1" 
-                                    width="50" 
-                                    height="50" 
-                                    alt="Profile picture">
-                                            <div>
-                                                <h6 class="mb-0"><?= htmlspecialchars($post['username']) ?></h6>
-                                                <small class="text-muted">
-                                                    <?= date('F j, Y \a\t g:i a', strtotime($post['created_at'])) ?>
-                                                </small>
-                                            </div>
-                            </div>
-                                
-                                <!-- post content -->
-                                <p class="post-content mb-3"><?= formatPostContent($post['content']) ?></p>
-                                
-                                <?php if ($post['media_path']): ?>
-                                    <?php if (strpos($post['media_path'], '.mp4') !== false): ?>
-                                        <video controls class="w-100 rounded mb-3">
-                                        <source src="/glimmr/<?= $post['media_path'] ?>" type="video/mp4">
-                                        </video>
-                                    <?php else: ?>
-                                        <div class="container d-flex justify-content-center">
-                                            <img src="/glimmr/<?= $post['media_path'] ?>" 
-                                             class="img-fluid rounded mb-3" 
-                                             alt="Post image">
+                <div class="card mb-4 post-card position-relative" id="card">
+                    <form method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');" class="position-absolute top-0 end-0 m-4">
+                        <input type="hidden" name="delete_post_id" value="<?= htmlspecialchars($post['id']) ?>">
+                        <button type="submit" class="btn btn-danger btn-sm" title="Delete Post">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                    <!-- profile pic, username, time posted -->
+                    <div class="card-body">
+                        <div class="d-flex mb-3">
+                            <img src="<?= htmlspecialchars($post['profile_pic'] ?? '/assets/img/profile-pic.png') ?>" 
+                                class="rounded-circle me-1" 
+                                width="50" 
+                                height="50" 
+                                alt="Profile picture">
+                                        <div class="d-flex flex-column justify-content-center ms-2">
+                                            <h6 class="mb-0"><?= htmlspecialchars($post['username']) ?></h6>
+                                            <small class="text" style="color:rgb(118, 118, 116);">
+                                                <?= date('F j, Y \a\t g:i a', strtotime($post['created_at'])) ?>
+                                            </small>
                                         </div>
-                                    <?php endif; ?>
-                                <?php endif; ?>
-                                
-                                <!-- hashtags -->
-                                
-                            </div>
                         </div>
-                    <?php endforeach; ?>
+                            
+                            <!-- post content -->
+                            <p class="post-content mb-3"> <?= formatPostContent($post['content']) ?></p>
+                            
+                            <?php if ($post['media_path']): ?>
+                                <?php if (strpos($post['media_path'], '.mp4') !== false): ?>
+                                    <video controls class="w-100 rounded mb-3">
+                                    <source src="/glimmr/<?= $post['media_path'] ?>" type="video/mp4">
+                                    </video>
+                                <?php else: ?>
+                                    <div class="w-100 d-flex justify-content-center" id="postContent">
+                                        <img src="/glimmr/<?= $post['media_path'] ?>" 
+                                         class="img-fluid rounded mb-3" id="postContent"
+                                         alt="Post image">
+                                    </div>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            
+                            <!-- hashtags -->
+                            
+                        </div>
+                    </div>
+                <?php endforeach; ?>
                 <?php endif; ?>
             </div>
         </div>

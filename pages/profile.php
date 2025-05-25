@@ -1,5 +1,8 @@
 <?php
 session_start();
+
+$page_title = "My Profile";
+
 require __DIR__ . '/../config/database.php';
 
 if (!isset($_SESSION['user_id'])) {
@@ -12,10 +15,49 @@ $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->execute([$_SESSION['user_id']]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$page_title = "My Profile";
-include __DIR__ . '/../includes/header.php';
 ?>
 
+<!DOCTYPE html>
+<html lang="en">   
+<head>
+    <title>Glimmr - Feed</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="/glimmr/assets/css/style.css" rel="stylesheet">
+    <script src="assets/js/script.js"></script>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <!--custom header for profile page-->
+    <header class="header">
+        <div class="d-flex justify-content-between align-items-center w-100 p-0 m-0">
+            <div class="logo-container d-flex align-items-center">
+                <img src="../assets/img/logo.png" alt="Glimmr Logo" class="logo">
+            </div>
+
+            <!--profile nav bar-->
+            <nav class="navbar">
+                <ul class="nav-list d-flex">
+                    <li class="nav-item">
+                        <a href="../pages/feed.php" class="nav-link" style="text-decoration: none;">
+                        <i class="fas fa-newspaper"></i> Feed</a></li>
+
+                    <li class="nav-item">
+                        <a href="../pages/profile.php" class="nav-link" style="text-decoration: none;">
+                        <i class="fas fa-user-circle me-1"> <?= htmlspecialchars($_SESSION['username'])?> </i></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="../includes/auth.php?logout=true" class="nav-link" style="text-decoration: none;">
+                        <i class="fas fa-right-from-bracket me-1"></i> Logout</a>
+                    </li>    
+                </ul>
+            </nav>
+
+        </div>
+    </header>   
+    </body>
+</html>
 <div class="d-flex justify-content-center align-items-center vh-100 w-50">
     <div class="row justify-content-center w-100">
         <div class="col-lg-10">
