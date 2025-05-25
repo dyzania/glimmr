@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 $page_title = "Login";
@@ -32,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 ?>
 
-<div class="login-container d-flex justify-content-center align-items-center vh-100">
+<div class="login-container">
     <div class="auth-form">
         
         <?php if (isset($error)): ?>
@@ -43,17 +44,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="alert alert-success"><?php echo $_SESSION['success']; 
             unset($_SESSION['success']); ?></div><?php endif; ?>
 
+        <div class="auth_logo">
+            <img src="../assets/img/logo.png" alt="Glimmr Logo" class="logo">
+        </div>
+
         <h2 class="form-title">Login to Your Account</h2>
         
         <form method="POST">
-            <div class="mb-2">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" required>
+            <div class="mb-4">
+                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
             </div>
             
-            <div class="mb-2">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+            <div class="mb-4">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
             </div>
             
             <button type="submit" class="btn btn-primary w-100">Log In</button>

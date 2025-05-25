@@ -1,4 +1,5 @@
-<?php
+<?php 
+
 function getAllPosts($pdo) {
     $stmt = $pdo->query("
         SELECT p.*, u.username 

@@ -33,7 +33,7 @@
                         <i class="fas fa-newspaper"></i> FEED
                         </a></li>
 
-                        <li class="nav-item"><a href="../includes/auth.php?logout=true" onclick="showLogoutConfirmation()" class="nav-link" style="text-decoration: none;">
+                        <li class="nav-item"><a href="../includes/auth.php?logout=true" class="nav-link" style="text-decoration: none;">
                         <i class="fas fa-right-from-bracket me-1"></i> LOGOUT
                         </a></li>
 

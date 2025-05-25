@@ -10,21 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 require __DIR__ . '/../config/database.php';
 require __DIR__ . '/../functions/post_functions.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    //handle post deletion
-    if (isset($_POST['delete_post_id'])) {
-        
-        $post_id = intval($_POST['delete_post_id']);
-
-        if (deletePost($pdo, $post_id, $_SESSION['user_id'])) {
-            header("Location: ../pages/feed.php?deleted=1");
-            exit();
-        } else {
-            header("Location: ../pages/feed.php?deleted=0");
-            exit();
-        }
-    } else {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
 
         //handle post creation
         $content = htmlspecialchars($_POST['content'], ENT_QUOTES, 'UTF-8');
@@ -55,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         header("Location: ../pages/feed.php");
         exit();
-    }
 }
 
 //handles search
@@ -131,7 +116,7 @@ if (strpos($search, '#') === 0) {
                     </li>
 
                     <li class="nav-item">
-                        <a href="#" class="nav-link" onclick="showLogoutConfirmation()" style="text-decoration: none;">
+                        <a href="../pages/login.php" class="nav-link" style="text-decoration: none;">
                         <i class="fas fa-right-from-bracket me-1"></i> Logout</a>
                     </li>    
                 </ul>
@@ -139,24 +124,6 @@ if (strpos($search, '#') === 0) {
 
         </div>
     </header>
-
-    <div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Confirm Logout</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to logout?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <a href="../includes/auth.php?logout=true" class="btn btn-danger">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="h-100 w-100 d-flex flex-column align-items-center">
         <div class="row justify-content-center w-100">
@@ -222,8 +189,8 @@ if (strpos($search, '#') === 0) {
                     </div>
                 </div>
 
-                <!-- NEWS FEED -->
 
+                <!-- NEWS FEED -->
                 <?php if (empty($posts)): ?>
                     <div class="card">
                         <div class="card-body text-center py-5">
@@ -234,22 +201,10 @@ if (strpos($search, '#') === 0) {
                     </div>
                 <?php else: ?>
 
-                    <!-- posting -->
+                <!-- POSTS -->
                 <?php 
-                // DEBUG: output media_path for each post
                 foreach ($posts as $post): ?>
                 <div class="card mb-4 post-card position-relative">
-                            <div class="post-options position-absolute top-0 end-0 m-2">
-                            <button class="btn btn-sm btn-light three-dots-btn" title="Post options">&#x22EE;</button>
-                                <div class="dropdown-menu d-none shadow-sm">
-                                <form method="POST" class="delete-post-form" onsubmit="return confirm('Are you sure you want to delete this post?');">
-                                    <input type="hidden" name="delete_post_id" value="<?= $post['id'] ?>">
-                                    <button type="submit" class="dropdown-item text-danger">Delete</button>
-                                </form>
-                            <button class="dropdown-item report-post-btn" data-post-id="<?= $post['id'] ?>">Report</button>
-                                </div>
-                            </div>
-            
                         <!-- profile pic, username, time posted -->
                         <div class="card-body">
                             <div class="d-flex mb-3">
@@ -275,30 +230,16 @@ if (strpos($search, '#') === 0) {
                                         <source src="/glimmr/<?= $post['media_path'] ?>" type="video/mp4">
                                         </video>
                                     <?php else: ?>
-                                        <img src="/glimmr/<?= $post['media_path'] ?>" 
+                                        <div class="container d-flex justify-content-center">
+                                            <img src="/glimmr/<?= $post['media_path'] ?>" 
                                              class="img-fluid rounded mb-3" 
                                              alt="Post image">
+                                        </div>
                                     <?php endif; ?>
                                 <?php endif; ?>
                                 
                                 <!-- hashtags -->
-                                <?php if (!empty($post['hashtags'])): ?>
-                                    <div class="hashtags mt-2">
-                                        <?php 
-                                        $tags = explode(',', $post['hashtags']);
-                                        foreach ($tags as $tag):
-                                            if (!empty(trim($tag))):
-                                        ?>
-                                            <a href="../pages/feed.php?search=%23<?= urlencode(trim($tag)) ?>" 
-                                               class="hashtag me-2">
-                                                #<?= htmlspecialchars(trim($tag)) ?>
-                                            </a>
-                                        <?php 
-                                            endif;
-                                        endforeach; 
-                                        ?>
-                                    </div>
-                                <?php endif; ?>
+                                
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -308,6 +249,7 @@ if (strpos($search, '#') === 0) {
     </div>
 
     <script>
+
 
     //media preview
     function previewMedia(input) {
@@ -348,37 +290,8 @@ if (strpos($search, '#') === 0) {
     function clearMedia() {
         document.getElementById('mediaPreview').innerHTML = '';
         document.getElementById('media').value = '';
-    }
+    };
 
-    //post deletion confirmation
-    document.addEventListener('DOMContentLoaded', function() {
-            console.log('Feed page JS loaded');
-            document.querySelectorAll('.three-dots-btn').forEach(function(button) {
-                button.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    console.log('Three dots clicked');
-                    const dropdown = this.nextElementSibling;
-                    if (dropdown.classList.contains('d-none')) {
-                        document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.add('d-none'));
-                        dropdown.classList.remove('d-none');
-                    } else {
-                        dropdown.classList.add('d-none');
-                    }
-                });
-            });
-
-            document.addEventListener('click', function() {
-                document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.add('d-none'));
-            });
-
-            document.querySelectorAll('.report-post-btn').forEach(function(button) {
-                button.addEventListener('click', function() {
-                    const postId = this.getAttribute('data-post-id');
-                    alert('Report functionality is not implemented yet for post ID: ' + postId);
-                    this.parentElement.classList.add('d-none');
-                });
-            });
-        });
     </script>   
 </body>
 </html>

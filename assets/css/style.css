@@ -42,8 +42,25 @@ body {
     margin-right: 0;
 }
 .logo {
-    height: 40px;
-    margin-left: 12px;
+    height: 60px;
+    width: auto;
+}
+.auth_logo {
+    height: 100px; 
+    width: 100px; 
+    margin: auto; 
+    text-align: center; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.login-container, .signup-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 }
 .app-name {
     color: var(--primary-color);
@@ -106,6 +123,14 @@ body {
     width: 80%;
 }
 
+.alert {
+   padding: 10px 20px 10px 20px;
+}
+.alert-danger p {
+   margin: 5px;
+   text-align: center;
+}   
+
 
 .hero-section {
     height: 75vh;
@@ -156,10 +181,16 @@ body {
 }
 
 
-
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--light-gray);
+}
 .auth-form {
     max-width: 900px;
-    margin-top: 90px;
+    margin-top: 60px;
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
@@ -295,33 +326,10 @@ body {
     max-height: 500px;
     object-fit: contain;
 }
-
-
 .btn-close {
     background-color: rgba(0,0,0,0.5);
     opacity: 1;
     padding: 0.5rem;
-}
-.delete-post-form {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    z-index: 10;
-}
-.delete-post-button {
-    background-color: #dc3545;
-    border: none;
-    color: white;
-    font-weight: bold;
-    font-size: 1.2rem;
-    line-height: 1;
-    padding: 0 8px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-.delete-post-button:hover {
-    background-color: #a71d2a;
 }
 
 
@@ -349,62 +357,4 @@ body {
 /* Post Container Styles */
 .post-container {
     margin-top: 100px;
-}
-
-
-/* Three Dots Button and Dropdown Menu Styles */
-.three-dots-btn {
-    background: transparent;
-    border: none;
-    font-size: 1.5rem;
-    line-height: 1;
-    cursor: pointer;
-    color: var(--text-color);
-    padding: 0 5px;
-}
-.three-dots-btn:hover {
-    color: var(--primary-color);
-}
-.post-options {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    z-index: 20;
-}
-
-
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    min-width: 120px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    padding: 0.25rem 0;
-}
-.dropdown-menu.d-none {
-    display: none;
-}
-.dropdown-item {
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    background: none;
-    border: none;
-    width: 100%;
-    text-align: left;
-    font-size: 0.9rem;
-    color: var(--text-color);
-}
-.dropdown-item:hover {
-    background-color: var(--primary-light);
-    color: var(--white);
-}
-.dropdown-item.text-danger {
-    color: #dc3545;
-}
-.dropdown-item.text-danger:hover {
-    background-color: #a71d2a;
-    color: white;
 }
