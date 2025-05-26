@@ -92,3 +92,58 @@ document.querySelector('form').addEventListener('submit', function(e) {
         passwordInput.focus();
     }
 });
+
+function previewProfilePic(input) {
+    const preview = document.getElementById('profilePicPreview');
+    const saveBtn = document.getElementById('saveProfilePicBtn');
+    
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            saveBtn.disabled = false;
+        }
+        
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function clearMedia() {
+        document.getElementById('mediaPreview').innerHTML = '';
+        document.getElementById('media').value = '';
+    };
+
+     function previewMedia(input) {
+        const preview = document.getElementById('mediaPreview');
+        preview.innerHTML = '';
+        
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            const fileType = file.type.split('/')[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                if (fileType === 'image') {
+                    preview.innerHTML = `
+                        <img src="${e.target.result}" 
+                             class="img-fluid rounded" 
+                             style="max-height: 200px">
+                        <button type="button" 
+                                class="btn-close position-absolute top-0 end-0 m-2" 
+                                onclick="clearMedia()"></button>
+                    `;
+                } else if (fileType === 'video') {
+                    preview.innerHTML = `
+                        <video controls class="w-100 rounded">
+                            <source src="${e.target.result}" type="${file.type}">
+                        </video>
+                        <button type="button" 
+                                class="btn-close position-absolute top-0 end-0 m-2" 
+                                onclick="clearMedia()"></button>
+                    `;
+                }
+            } 
+            reader.readAsDataURL(file);
+        }
+    }

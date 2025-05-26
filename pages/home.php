@@ -1,10 +1,12 @@
 <?php 
 $page_title = "Home";
 include '../includes/header.php'; 
+
 ?>
 
+<body style="background-color: #1c1c1c;">
 <section class="hero-section">
-    <div class="container d-flex flex-column justify-content-center align-items-center text-center">
+    <div class="container d-flex flex-column justify-content-center align-items-start text-center">
         <h1 class="slogan">Share Your <span>Moments</span> with the World</h1>
         <p class="lead">Connect with friends and discover new experiences</p>
     </div>
@@ -19,7 +21,7 @@ include '../includes/header.php';
                     <img src="/glimmr/assets/img/screenshots/feed.jpg" class="card-img-top" alt="Social Feed">
                     <div class="card-body">
                         <h5 class="card-title">Social Feed</h5>
-                        <p class="card-text">Stay updated with posts from your friends and communities in real-time.</p>
+                        <p class="card-text">Stay updated with posts from your friends</p>
                     </div>
                 </div>
             </div>
@@ -27,7 +29,7 @@ include '../includes/header.php';
                 <div class="card feature-card">
                     <img src="/glimmr/assets/img/screenshots/connect.jpg" class="card-img-top" alt="Connect">
                     <div class="card-body">
-                        <h5 class="card-title">Connect</h5>
+                        <h5 class="card-title">Interact</h5>
                         <p class="card-text">Find and connect with people who share your interests and passions.</p>
                     </div>
                 </div>
@@ -36,13 +38,13 @@ include '../includes/header.php';
                 <div class="card feature-card">
                     <img src="/glimmr/assets/img/screenshots/share.jpg" class="card-img-top" alt="Share">
                     <div class="card-body">
-                        <h5 class="card-title">Share</h5>
-                        <p class="card-text">Share your thoughts, photos, and videos with your network.</p>
+                        <h5 class="card-title">Communicate</h5>
+                        <p class="card-text">Share your thoughts, photos, and videos with your friends.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
+</body>
 <?php include '../includes/footer.php'; ?>

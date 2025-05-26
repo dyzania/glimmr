@@ -7,11 +7,11 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// Check if user is admin (you'll need to add an 'is_admin' column to users table)
-$is_admin = false; // Set this based on your authentication logic
 
 $page_title = "Dashboard";
-include __DIR__ . '/../includes/header.php';
+include __DIR__ . '/../includes/feed_header.php'; ?>
+<body class="dashboard-page">
+<?php
 
 // Get statistics data
 $stats = [];
@@ -37,13 +37,14 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $posts_per_day[] = $row;
 }
 
-// Get popular hashtags
+//get popular hashtags
 $popular_hashtags = [];
 $stmt = $pdo->query("
     SELECT hashtags 
     FROM posts 
     WHERE hashtags IS NOT NULL
 ");
+
 $all_hashtags = [];
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $tags = explode(',', $row['hashtags']);
@@ -102,6 +103,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 </div>
             </div>
         </div>
+
         <div class="col-md-4">
             <div class="card text-white bg-info mb-3">
                 <div class="card-body">

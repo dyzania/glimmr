@@ -2,6 +2,8 @@
 
 session_start();
 
+include __DIR__ . '/../includes/feed_header.php';
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../pages/login.php");
     exit();
@@ -82,65 +84,11 @@ if (strpos($search, '#') === 0) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">   
-<head>
-    <title>Glimmr - Feed</title>
-    <script src="assets/js/script.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="/glimmr/assets/css/style.css" rel="stylesheet">
-</head>
+    <script src="../assets/js/script.js"></script>
 
-<body class="d-flex flex-column min-vh-100">
+    <div class="h-100 w-100 d-flex flex-column align-items-center" style="margin-top: 95px;">
 
-    <!--custom header for feed page-->
-    <header class="header">
-        <div class="d-flex justify-content-between align-items-center w-100 p-0 m-0">
-            <div class="logo-container d-flex align-items-center">
-                <img src="../assets/img/logo.png" alt="Glimmr Logo" class="logo">
-            </div>
-
-            <!--search container-->
-            <div class="search-container">
-                <form method="GET" class="d-flex">
-                    <input type="text" 
-                           class="form-control search-input" 
-                           name="search" 
-                           placeholder="Search posts or #hashtags"
-                           value="<?= htmlspecialchars($search) ?>">
-                    <button type="submit" class="btn btn-secondary ms-1">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
-            </div>
-
-            <!--feed nav bar-->
-            <nav class="navbar">
-                <ul class="nav-list d-flex">
-                    <li class="nav-item">
-                        <a href="../pages/feed.php" class="nav-link" style="text-decoration: none;">
-                        <i class="fas fa-newspaper"></i> Feed</a></li>
-
-                    <li class="nav-item">
-                        <a href="../pages/profile.php" class="nav-link" style="text-decoration: none;">
-                        <i class="fas fa-user-circle me-1"> <?= htmlspecialchars($_SESSION['username'])?> </i></a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="../includes/auth.php?logout=true" class="nav-link" style="text-decoration: none;">
-                        <i class="fas fa-right-from-bracket me-1"></i> Logout</a>
-                    </li>    
-                </ul>
-            </nav>
-
-        </div>
-    </header>
-
-    <div class="h-100 w-100 d-flex flex-column align-items-center">
-        <div class="row justify-content-center w-100">
-
-            <?php if (isset($_SESSION['error'])): ?>
+         <?php if (isset($_SESSION['error'])): ?>
                         <div class="alert alert-danger">
                             <?= htmlspecialchars($_SESSION['error']) ?>
                             <?php unset($_SESSION['error']); ?>
@@ -154,7 +102,15 @@ if (strpos($search, '#') === 0) {
                         </div>
                     <?php endif; ?>
 
+        <div class="row justify-content-center w-100">
+
                 <div class="col-lg-6 post-container">
+                <!-- Search Bar -->
+                <form id="searchForm" method="GET" action="../pages/feed.php" class="mb-3 d-flex">
+                    <input type="text" id="searchInput" name="search" class="form-control me-2" placeholder="Search hashtags or content" value="<?= htmlspecialchars($search) ?>">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+
                 <!--search results info -->
                 <?php if ($search): ?>
                     <div class="alert alert-info mb-2">
@@ -205,7 +161,7 @@ if (strpos($search, '#') === 0) {
                 <!-- NEWS FEED -->
                 <?php if (empty($posts)): ?>
                     <div class="card" id="noPostsCard">
-                        <div class="card-body text-center py-5" style="color: #a89900;">
+                        <div class="card-body text-center py-5" style="color: #a89900; background-color: #252728;">
                             <i class="fas fa-newspaper fa-3x mb-2"></i>
                             <h5>No posts found</h5>
                             <p>Be the first to post something!</p>
@@ -267,49 +223,19 @@ if (strpos($search, '#') === 0) {
     </div>
 
     <script>
-
-
-    //media preview
-    function previewMedia(input) {
-        const preview = document.getElementById('mediaPreview');
-        preview.innerHTML = '';
-        
-        if (input.files && input.files[0]) {
-            const file = input.files[0];
-            const fileType = file.type.split('/')[0];
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                if (fileType === 'image') {
-                    preview.innerHTML = `
-                        <img src="${e.target.result}" 
-                             class="img-fluid rounded" 
-                             style="max-height: 200px">
-                        <button type="button" 
-                                class="btn-close position-absolute top-0 end-0 m-2" 
-                                onclick="clearMedia()"></button>
-                    `;
-                } else if (fileType === 'video') {
-                    preview.innerHTML = `
-                        <video controls class="w-100 rounded">
-                            <source src="${e.target.result}" type="${file.type}">
-                        </video>
-                        <button type="button" 
-                                class="btn-close position-absolute top-0 end-0 m-2" 
-                                onclick="clearMedia()"></button>
-                    `;
-                }
-            } 
-            reader.readAsDataURL(file);
-        }
-    }
-
-    //clear media preview
-    function clearMedia() {
-        document.getElementById('mediaPreview').innerHTML = '';
-        document.getElementById('media').value = '';
-    };
-
-    </script>   
-</body>
-</html>
+        // Handle hashtag clicks to populate search bar and submit form
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('a.hashtag').forEach(function(element) {
+                element.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    var hashtag = this.textContent.trim();
+                    var searchInput = document.getElementById('searchInput');
+                    var searchForm = document.getElementById('searchForm');
+                    if (searchInput && searchForm) {
+                        searchInput.value = hashtag;
+                        searchForm.submit();
+                    }
+                });
+            });
+        });
+    </script>

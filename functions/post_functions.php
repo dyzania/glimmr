@@ -40,6 +40,7 @@ function formatPostContent($content) {
     return nl2br($content);
 }
 
+//delete post by user
 function deletePost($pdo, $post_id, $user_id) {
     $stmt = $pdo->prepare("DELETE FROM posts WHERE id = ? AND user_id = ?");
     return $stmt->execute([$post_id, $user_id]);

@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($user && password_verify($password, $user['password'])) {
+        
     if ($user['is_admin']) {    
         header("Location: ../admin/dashboard.php");
         exit();
@@ -48,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <div class="login-container">
-    <div class="auth-form">
+    <div class="auth-form mb-5">
         
         <?php if (isset($error)): ?>
             <div class="alert alert-danger"><?php echo $error; ?></div>
@@ -62,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <img src="../assets/img/logo.png" alt="Glimmr Logo" class="logo">
         </div>
 
-        <h2 class="form-title">Login to Your Account</h2>
+        <h2 class="form-title">Login to your Account</h2>
         
         <form method="POST">
             <div class="mb-4">

@@ -1,19 +1,16 @@
-    <footer class="footer">
-        <div class="container">
-            <div class="row d-flex flex-row justify-content-between align-items-center">
-                <div class="col-md-6">
-                    <h3>Glimmr</h3>
-                    <p>Connect with friends and share your moments</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <p>&copy; 2025 Glimmr. All rights reserved.</p>
-                    <p>Created by: Genesis Manzano, Crislene Loquingan, Karen Hadap, April Joy Bautista</p>
-                </div>
-            </div>
+<footer class="footer">
+    <div class="f_box">
+            <h3 style="margin: 0;">Glimmr</h3>
         </div>
+        <div class="f_box">
+            <p style="margin: 0;">@2025 All Rights Reserved</p>
+        </div>
+        <div class="f_box" style="font-size: 13px;">
+            <p style="margin: 0;">Created by: Genesis Manzano, April Joy Bautista, Crislene Loquingan, Karen Joy Hadap</p>
+        </div>
+
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/js/script.js"></script>
 </body>
 </html>
