@@ -321,5 +321,8 @@ body {
 
 /* Post Container Styles */
 .post-container {
-    margin-top: 5px; 
+    margin-top: 2px; 
+}
+body.dashboard-page h1 {
+    margin-top: 50px;
 }

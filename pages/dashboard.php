@@ -72,13 +72,11 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 }
 ?>
 
-<div class="container mt-4 d-flex flex-column">
-    <h1 class="mb-4">Glimmr Dashboard</h1>
-    
+<div class="container d-flex flex-column">
     <!-- Stats Cards -->
-    <div class="row mb-4">
+    <div class="row mb-2" style="margin-top: 100px;">
         <div class="col-md-4">
-            <div class="card text-white bg-primary mb-3">
+            <div class="card text-white bg-primary mb-2">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>

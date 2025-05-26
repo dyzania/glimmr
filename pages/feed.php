@@ -172,7 +172,7 @@ if (strpos($search, '#') === 0) {
                 <!-- POSTS -->
                 <?php 
                 foreach ($posts as $post): ?>
-                <div class="card mb-4 post-card position-relative" id="card">
+                <div class="card mb-2 post-card position-relative" id="card">
                     <form method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');" class="position-absolute top-0 end-0 m-4">
                         <input type="hidden" name="delete_post_id" value="<?= htmlspecialchars($post['id']) ?>">
                         <button type="submit" class="btn btn-danger btn-sm" title="Delete Post">

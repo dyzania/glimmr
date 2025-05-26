@@ -18,16 +18,16 @@ include '../includes/header.php';
         <div class="row">
             <div class="col-md-4">
                 <div class="card feature-card">
-                    <img src="/glimmr/assets/img/screenshots/feed.jpg" class="card-img-top" alt="Social Feed">
+                    <img src="/glimmr/assets/img/social_feed.png" class="card-img-top" alt="Social Feed">
                     <div class="card-body">
                         <h5 class="card-title">Social Feed</h5>
-                        <p class="card-text">Stay updated with posts from your friends</p>
+                        <p class="card-text">Stay updated with posts from your friends and families</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card feature-card">
-                    <img src="/glimmr/assets/img/screenshots/connect.jpg" class="card-img-top" alt="Connect">
+                    <img src="/glimmr/assets/img/interact.webp" class="card-img-top" alt="Connect">
                     <div class="card-body">
                         <h5 class="card-title">Interact</h5>
                         <p class="card-text">Find and connect with people who share your interests and passions.</p>
@@ -36,7 +36,7 @@ include '../includes/header.php';
             </div>
             <div class="col-md-4">
                 <div class="card feature-card">
-                    <img src="/glimmr/assets/img/screenshots/share.jpg" class="card-img-top" alt="Share">
+                    <img src="/glimmr/assets/img/communicate.webp   " class="card-img-top" alt="Share">
                     <div class="card-body">
                         <h5 class="card-title">Communicate</h5>
                         <p class="card-text">Share your thoughts, photos, and videos with your friends.</p>
