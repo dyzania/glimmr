@@ -12,7 +12,7 @@ if (!isset($_SESSION['user_id'])) {
 require __DIR__ . '/../config/database.php';
 require __DIR__ . '/../functions/post_functions.php';
 
-// Handle post deletion
+// handle post deletion
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_post_id'])) {
     $post_id = intval($_POST['delete_post_id']);
     if (deletePost($pdo, $post_id, $_SESSION['user_id'])) {
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_post_id'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['delete_post_id'])) { 
 
-        //handle post creation
+        //HANDLE POST CREATION
         $content = htmlspecialchars($_POST['content'], ENT_QUOTES, 'UTF-8');
         $hashtags = extractHashtags($content);
         
@@ -56,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['delete_post_id'])) {
 
 //handles search
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+
 if ($search) {
     $stmt = $pdo->prepare("
         SELECT p.*, u.username, u.profile_pic
@@ -84,6 +85,11 @@ if (strpos($search, '#') === 0) {
 }
 ?>
 
+
+
+
+
+    <!-- Content Container -->
     <script src="../assets/js/script.js"></script>
 
     <div class="h-100 w-100 d-flex flex-column align-items-center" style="margin-top: 95px;">
@@ -105,13 +111,14 @@ if (strpos($search, '#') === 0) {
         <div class="row justify-content-center w-100">
 
                 <div class="col-lg-6 post-container">
+
                 <!-- Search Bar -->
                 <form id="searchForm" method="GET" action="../pages/feed.php" class="mb-3 d-flex">
                     <input type="text" id="searchInput" name="search" class="form-control me-2" placeholder="Search hashtags or content" value="<?= htmlspecialchars($search) ?>">
                     <button type="submit" class="btn btn-primary">Search</button>
                 </form>
 
-                <!--search results info -->
+                <!--Search Results Info -->
                 <?php if ($search): ?>
                     <div class="alert alert-info mb-2">
                         <?php if (strpos($search, '#') === 0): ?>
@@ -123,7 +130,7 @@ if (strpos($search, '#') === 0) {
                     </div>
                 <?php endif; ?>
 
-                <!--post creation card-->
+                <!--Post Creation Card-->
                 <div class="card mb-2 shadow-sm" id="postCreationCard">
                     <div class="card-body">
                         <form id="postForm" method="POST" enctype="multipart/form-data">
@@ -135,12 +142,12 @@ if (strpos($search, '#') === 0) {
                                           required></textarea>
                             </div>
                             
-                            <!--media preview -->
+                            <!--Media Preview -->
                             <div id="mediaPreview" class="mb-3 text-center position-relative"></div>
                             <div class="d-flex justify-content-between align-items-center pt-2 border-top">
                                 <div class="d-flex">
 
-                                    <!--media upload -->
+                                    <!--Media Upload -->
                                     <label class="btn btn-sm btn-outline-secondary me-2" style="color: white;">
                                         <i class="fas fa-image me-1"></i> Photo / Video
                                         <input type="file" 
@@ -159,6 +166,8 @@ if (strpos($search, '#') === 0) {
 
 
                 <!-- NEWS FEED -->
+
+                <!-- if posts is empty -->
                 <?php if (empty($posts)): ?>
                     <div class="card" id="noPostsCard">
                         <div class="card-body text-center py-5" style="color: #a89900; background-color: #252728;">
@@ -169,17 +178,21 @@ if (strpos($search, '#') === 0) {
                     </div>
                 <?php else: ?>
 
-                <!-- POSTS -->
+                <!-- Posts -->
                 <?php 
+                
                 foreach ($posts as $post): ?>
                 <div class="card mb-2 post-card position-relative" id="card">
+
+                    <!-- Delete Post -->
                     <form method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');" class="position-absolute top-0 end-0 m-4">
                         <input type="hidden" name="delete_post_id" value="<?= htmlspecialchars($post['id']) ?>">
                         <button type="submit" class="btn btn-danger btn-sm" title="Delete Post">
                             <i class="fas fa-trash"></i>
                         </button>
                     </form>
-                    <!-- profile pic, username, time posted -->
+
+                    <!-- Profile Pic, Username, Time Posted -->
                     <div class="card-body">
                         <div class="d-flex mb-3">
                             <img src="<?= htmlspecialchars($post['profile_pic'] ?? '/assets/img/profile-pic.png') ?>" 
@@ -195,7 +208,7 @@ if (strpos($search, '#') === 0) {
                                         </div>
                         </div>
                             
-                            <!-- post content -->
+                            <!-- Post Content -->
                             <p class="post-content mb-3"> <?= formatPostContent($post['content']) ?></p>
                             
                             <?php if ($post['media_path']): ?>
@@ -203,17 +216,16 @@ if (strpos($search, '#') === 0) {
                                     <video controls class="w-100 rounded mb-3">
                                     <source src="/glimmr/<?= $post['media_path'] ?>" type="video/mp4">
                                     </video>
+
                                 <?php else: ?>
                                     <div class="w-100 d-flex justify-content-center" id="postContent">
                                         <img src="/glimmr/<?= $post['media_path'] ?>" 
                                          class="img-fluid rounded mb-3" id="postContent"
                                          alt="Post image">
+
                                     </div>
                                 <?php endif; ?>
-                            <?php endif; ?>
-                            
-                            <!-- hashtags -->
-                            
+                            <?php endif; ?> 
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -222,8 +234,10 @@ if (strpos($search, '#') === 0) {
         </div>
     </div>
 
+
+
     <script>
-        // Handle hashtag clicks to populate search bar and submit form
+        //Handle hashtag clicks to populate search bar and submit form
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('a.hashtag').forEach(function(element) {
                 element.addEventListener('click', function(event) {

@@ -28,6 +28,7 @@ function countPostsByHashtag($pdo, $hashtag) {
 
 
 function formatPostContent($content) {
+    
     //convert hashtags to links
     $content = preg_replace_callback(
         '/#(\w+)/', 

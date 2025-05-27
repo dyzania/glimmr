@@ -7,8 +7,8 @@ include '../includes/header.php';
 <body style="background-color: #1c1c1c;">
 <section class="hero-section">
     <div class="container d-flex flex-column justify-content-center align-items-start text-center">
-        <h1 class="slogan">Share Your <span>Moments</span> with the World</h1>
-        <p class="lead">Connect with friends and discover new experiences</p>
+        <h1 class="slogan">Share Your <span>Moments</span></h1>
+        <p class="lead">Connect with friends and have fun</p>
     </div>
 </section>
 

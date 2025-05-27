@@ -44,7 +44,7 @@ const usernameInput = document.getElementById('username');
     }
 
     
-    // Email availability check
+// Email availability check
 const emailInput = document.getElementById('email');
     if (emailInput) {
         emailInput.addEventListener('blur', function() {

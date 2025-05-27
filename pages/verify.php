@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['verify_otp'])) {
 include_once __DIR__ . '/../config/database.php';
 include_once __DIR__ . '/../functions/user_functions.php';
 
-    $submitted_otp = trim($_POST['otp']);
+    $submitted_otp = trim(string: $_POST['otp']);
     $email = $_SESSION['email'];
     
 if ($submitted_otp == $_SESSION['otp']) {

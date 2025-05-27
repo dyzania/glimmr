@@ -55,6 +55,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         }
     }
 }
+
 $tag_counts = array_count_values($all_hashtags);
 arsort($tag_counts);
 $popular_hashtags = array_slice($tag_counts, 0, 10, true);
@@ -73,6 +74,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 ?>
 
 <div class="container d-flex flex-column">
+
     <!-- Stats Cards -->
     <div class="row mb-2" style="margin-top: 100px;">
         <div class="col-md-4">
@@ -201,7 +203,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     </div>
 </div>
 
-<!-- Include Chart.js -->
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>

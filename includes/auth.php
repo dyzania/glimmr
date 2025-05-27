@@ -8,7 +8,8 @@ if (isset($_GET['logout'])) {
     exit();
 }
 
-//handle OTP verification if needed
+
+//handle OTP verification
 if (isset($_POST['verify_otp'])) {
     
     include '../config/database.php';

@@ -16,11 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if ($password !== $confirm_password) $errors[] = "Passwords do not match";
     
-    
     if (!usernameAvailable($pdo, $username)) $errors[] = "Username already taken";
     if (!emailAvailable($pdo, $email)) $errors[] = "Email already registered";
     
-    //in the registration success block:
+    
     if (empty($errors)) {
         $otp = rand(100000, 999999);
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);

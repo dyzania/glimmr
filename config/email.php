@@ -12,10 +12,10 @@ function sendVerificationEmail($email, $otp) {
     try {
         // Server settings
         $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com'; // Your SMTP server
+        $mail->Host       = 'smtp.gmail.com'; // SMTP server
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'exodusgalimba@gmail.com'; // Your email
-        $mail->Password   = 'kutw gpgu xezw tkrb'; // Use app password for Gmail
+        $mail->Username   = 'exodusgalimba@gmail.com'; // Email
+        $mail->Password   = 'kutw gpgu xezw tkrb'; // app password for Gmail
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
         
