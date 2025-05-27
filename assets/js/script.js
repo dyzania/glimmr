@@ -1,6 +1,5 @@
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Password match validation
+    //password match validation
     const password = document.getElementById('password');
     const confirmPassword = document.getElementById('confirm_password');
     
@@ -22,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Username availability check
-    const usernameInput = document.getElementById('username');
+const usernameInput = document.getElementById('username');
     if (usernameInput) {
         usernameInput.addEventListener('blur', function() {
             const username = this.value;
@@ -46,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
     // Email availability check
-    const emailInput = document.getElementById('email');
+const emailInput = document.getElementById('email');
     if (emailInput) {
         emailInput.addEventListener('blur', function() {
             const email = this.value;
@@ -114,7 +113,7 @@ function clearMedia() {
         document.getElementById('media').value = '';
     };
 
-     function previewMedia(input) {
+function previewMedia(input) {
         const preview = document.getElementById('mediaPreview');
         preview.innerHTML = '';
         

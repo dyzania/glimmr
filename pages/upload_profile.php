@@ -10,10 +10,6 @@ if (!isset($_SESSION['user_id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_pic'])) {
     $user_id = $_SESSION['user_id'];
     $upload_dir = __DIR__ . '/../assets/uploads/profile_pics/';
-    
-    if (!file_exists($upload_dir)) {
-        mkdir($upload_dir, 0777, true);
-    }
 
     $file_ext = pathinfo($_FILES['profile_pic']['name'], PATHINFO_EXTENSION);
     $file_name = 'profile_' . $user_id . '_' . time() . '.' . $file_ext;
@@ -41,4 +37,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_pic'])) {
     
     header("Location: ../pages/profile.php");
     exit();
-}
+} ?>

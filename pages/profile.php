@@ -17,6 +17,8 @@ $stmt->execute([$_SESSION['user_id']]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
+<script src="../assets/js/script.js"></script>
+
 <div class="d-flex justify-content-center align-items-center vh-100 w-50">
     <div class="row justify-content-center w-100">
         <div class="col-lg-10">
